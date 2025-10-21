@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Memorial Festival Album</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.js"
+      integrity="sha512-WnxsVXni4eWh05rq6ArlTc95xJMu38xpv8uKUa95syEHCqBJiDyvgD8qpfAlnXrh3mptOMS+BZqZfmS5Ztn9Gg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"
+      integrity="sha512-XBZhOiabuX41sJLdnOjFkWDXLI4YAlnXrhIRbkIuAeGHNirMRHkRkNvztNFVQVw1Gc7YCOUMIqFZRMVAbwY2Zg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"
+      integrity="sha512-5x3bqR7F3T5pP7k+G2kZZgwyXR0vbJIUKGwEuITdSb9VjA36TObgGJE0E7E5Wdl66T4kLhF0u05hKp3vT9tJdg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </head>
+  <body>
+    <div class="page-gradient"></div>
+    <main class="page">
+      <header class="hero">
+        <div class="hero__text">
+          <p class="badge">Memorial Storyteller</p>
+          <h1>
+            お気に入りの写真をアップロードして
+            <span>フェスティバルアルバム</span>を作成
+          </h1>
+          <p class="hero__lead">
+            メインとなる人物・動物・モノの写真を読み込み、季節の祭りや幻想的な舞台に溶け込ませた GIF シーンを自動生成します。
+            生成後はアルバムでプレビューし、共有やダウンロードが可能です。
+          </p>
+          <div class="hero__actions">
+            <label class="upload-button">
+              <input type="file" id="photoInput" accept="image/*" hidden />
+              <span>写真をアップロード</span>
+            </label>
+            <button id="generateButton" class="primary">アルバムを生成</button>
+          </div>
+          <p class="hero__hint">
+            JPG / PNG / HEIC に対応。メイン被写体が中央に写った写真が一番きれいに仕上がります。
+          </p>
+        </div>
+        <div class="hero__preview" id="subjectPreview">
+          <div class="hero__placeholder">アップロードされた写真がここに表示されます</div>
+        </div>
+      </header>
+
+      <section class="section">
+        <div class="section__header">
+          <h2>フェスティバルテーマを選択</h2>
+          <p>
+            好きなテーマを複数選択できます。生成ボタンを押すとそれぞれのシーンが GIF 化され、アルバムへ追加されます。
+          </p>
+        </div>
+        <div class="theme-grid" id="themeGrid"></div>
+      </section>
+
+      <section class="section section--album">
+        <div class="section__header">
+          <h2>メモリアルアルバム</h2>
+          <p>生成されたシーンがここに並びます。共有やダウンロードで思い出を届けましょう。</p>
+        </div>
+        <div class="album" id="album"></div>
+        <div class="album-actions">
+          <button id="shareButton" class="secondary">アルバムを共有</button>
+          <button id="downloadAllButton" class="primary outline">すべてダウンロード</button>
+        </div>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <template id="themeCardTemplate">
+      <label class="theme-card">
+        <input type="checkbox" class="theme-card__input" />
+        <div class="theme-card__visual"></div>
+        <div class="theme-card__content">
+          <h3 class="theme-card__title"></h3>
+          <p class="theme-card__description"></p>
+          <span class="theme-card__tag"></span>
+        </div>
+      </label>
+    </template>
+
+    <template id="albumItemTemplate">
+      <article class="album-item">
+        <div class="album-item__media">
+          <img alt="生成されたフェスティバルシーン" loading="lazy" />
+        </div>
+        <div class="album-item__content">
+          <h3></h3>
+          <p></p>
+          <div class="album-item__actions">
+            <button class="secondary">ダウンロード</button>
+            <button class="ghost">GIFをプレビュー</button>
+          </div>
+        </div>
+      </article>
+    </template>
+
+    <div class="modal" id="modal" hidden>
+      <div class="modal__dialog">
+        <button class="modal__close" id="modalClose" aria-label="閉じる">&times;</button>
+        <img id="modalImage" alt="GIF プレビュー" />
+      </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
